@@ -7,3 +7,28 @@ input[type="range"] {
     margin-top:30px;
     text-align: center;
 }
+
+
+#conv-display {
+	height: auto;
+}
+
+#focusedUtterance{
+	width: 100%;
+	height: 8em;
+	font-size: 20px;
+}
+
+#conversationTable{
+}
+
+.btn-group-wrap {
+    text-align: center;
+}
+
+div.btn-group-vertical {
+    margin: 0 auto; 
+    text-align: center;
+    width: inherit;
+    display: inline-block;
+}

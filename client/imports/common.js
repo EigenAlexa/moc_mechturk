@@ -41,6 +41,28 @@ function myGuess() {
 }
 Template.registerHelper('myGuess', myGuess);
 
+
+function scrollTo(target) {
+    var offset;
+    var scrollSpeed = 600;
+        var wheight = $(window).height();
+        //var targetname = target;
+        //var windowheight = $(window).height();
+        //var pagecenterH = windowheight/2;
+        //var targetheight = document.getElementById(targetname).offsetHeight;
+
+    if (viewport()["width"] > 767 && !jQuery.browser.mobile) {
+        // Offset anchor location and offset navigation bar if navigation is fixed
+        //offset = $(target).offset().top - document.getElementById('navigation').clientHeight;
+                offset = $(target).offset().top - $(window).height() / 2 + document.getElementById('navigation').clientHeight + document.getElementById('footer').clientHeight;
+    } else {
+        // Offset anchor location only since navigation bar is now static
+        offset = $(target).offset().top;
+    }
+
+    $('html, body').animate({scrollTop:offset}, scrollSpeed);
+}
+
 export {
   delphiGame,
   gamePhase,
@@ -48,5 +70,9 @@ export {
   finalPhase,
   completedPhase,
   myGuess,
+  scrollTo,
   guessSubmitted
 };
+
+
+

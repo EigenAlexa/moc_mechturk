@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check'
 
 import { drawProb } from '/server/imports/math.js';
+import { mocTaxonomy } from '/server/imports/moc.js'
 import { generateScenario, setupGame } from '/server/imports/scenario.js';
 
 Meteor.publish("GameInfo", function() {
@@ -26,6 +27,10 @@ Meteor.publish("AdminInfo", function(_groupId) {
 });
 
 Meteor.methods({
+  getMOCTaxonomy: function(){
+    return mocTaxonomy;
+  },
+
   newGame: function (n_p, n_v, incentive, delphi){
     check(n_p, Number);
     check(n_v, Number);

@@ -1,262 +1,40 @@
 <template name="experiment">
     <div class="col-md-12 game_title">
-        <h1>Guessing Game</h1>
+        <h1>Modes of Conversation Annotation Project Task</h1>
     </div>
 
     <div class="col-md-12">
         {{> gameInstructions}}
     </div>
 
-    {{! Table of users next to number line}}
-    <div class="col-md-4 coin-flips">
-        {{> temPublicFlips }}
 
-        {{> temPrivateFlips }}
+    {{> controller}}
 
-        {{> coinTable}}
-    </div>
 
-    <div class="col-md-8 flip-guesser">
-        {{> controller}}
-    </div>
 
+</template>
+
+<!-- 
     {{#if tutorialEnabled}}
     {{> tutorial tutorialOptions}}
-    {{/if}}
+    {{/if}} -->
+
+<template name="moclabel">
+
 </template>
 
 
 
-<template name="temPublicFlips">
-    <div class="public-flips">
-        <h3><b>What everyone saw:</b></h3>
-        {{> displayFlips publicFlips}}
-    </div>
-</template>
-
-<template name="temPrivateFlips">
-    <div class="own-private-flips">  
-        <h3><b>What only you saw:</b></h3>
-        {{> displayFlips privateFlips}}
-    </div>
-</template>
-
-
-<template name="coinTable">
-    {{! Show other users in a simple table }}
-
-    <h3><b>Other players</b></h3>
-    <table class="table table-striped table-player">
-        <thead>
-        <tr>
-            <th>{{! User}}</th>
-            <th>{{! Info }}</th>
-            {{!--
-                This looks somewhat strange, but it properly shows                         1 column in normal and 2 in delphi mode.
-            --}}
-            <th>{{#if delphiGame}}1<sup>st</sup> Guess{{/if}}</th>
-            {{#if delphiGame}}<th>2<sup>nd</sup> Guess</th>{{/if}}
-        </tr>
-        </thead>
-        <tbody>
-        {{#each opponents}}
-            <tr>
-                <td>
-                    <img src='/img/ppl-{{imageHash}}.jpg' height="20">
-                    {{oppName}}
-                </td>
-                <td>(saw {{numPrivate}} flips)</td>
-
-                {{#if delphiGame}}
-                {{#if delphiGuessed}}
-                    <td class="success">Guessed!</td>
-                {{else}}
-                    <td class="warning">Waiting...</td>
-                {{/if}}
-                {{/if}}
-
-                {{#if answerGuessed}}
-                    <td class="success">Guessed!</td>
-                {{else}}
-                    <td class="warning">Waiting...</td>
-                {{/if}}
-            </tr>
-        {{/each}}
-        </tbody>
-    </table>
-</template>
-
-<template name="displayFlips">
-    <div class="text-center">
-    {{#each this}}
-        {{#if this}}
-            <div class="coin head"></div>
-        {{else}}
-            <div class="coin tail"></div>
-        {{/if}}
-    {{/each}}
-    </div>
-
-    <h3 class="text-center">
-    {{heads}} heads / {{total}} flips
-    </h3>
+<template name="labelSentence">
 </template>
 
 <template name="controller">
-    {{#if delphiPhase}}
-        {{#if myGuess.delphi }}
-            <h3>
-                <span class="text-warning">Waiting for others to submit their
-                initial guesses.</span>
-            </h3>
-        {{else}}
-            <h3 class="text-danger">
-                Enter your initial guess. (Then you will see all other guesses.)
-            </h3>
-        {{/if}}
-
-        {{> numberLine existing="delphi" }}
-    {{/if}}
-
-    {{#if finalPhase}}
-        {{#if delphiGame}}
-            
-            <h3>Here are all the initial guesses.</h3>
-            
-            {{> numberLine field="delphi" }}
-
-            {{#if myGuess.answer}}
-                <h3 class="text-warning">Waiting for others to revise their guesses.</h3>
-            {{else}}
-                <h3>You can change your guess if you like.</h3>
-            {{/if}}
-
-            {{> numberLine existing="delphi" }}
-
-        {{else}}
-
-            {{#if myGuess.answer}}
-                <h3 class="text-warning">
-                    <span class="text-warning">
-                        Waiting for others to submit their guesses.
-                    </span>
-                </h3>
-            {{else}}
-                <h3>Enter your guess of the number of heads in 100 new coin flips.</h3>
-            {{/if}}
-
-            {{> numberLine existing="answer" }}
-
-        {{/if}}
-    {{/if}}
-
-    {{#if completedPhase}}
-        {{#if delphiGame}}
-            <h3>Preliminary results:</h3>
-            {{> numberLine field="delphi" }}
-        {{/if}}
-
-        <h3>Final results:</h3>
-        {{> numberLine field="answer" }}
-
-        {{> gameResults }}
-    {{/if}}
-</template>
-
-<!-- Shows everyone's guesses in the delphi or result.
-    To make this easier to display, layout doesn't need to be reactive.
--->
-<template name="numberLine">
-    <svg class="center-block" width="{{c 'width'}}" height="{{c 'height'}}">
-        {{!
-        arrowhead - http://vanseodesign.com/web-design/svg-markers/
-        see also https://www.w3.org/TR/SVG2/painting.html#VertexMarkerProperties
-        }}
-        <defs>
-            <marker id="arrow" markerWidth="10" markerHeight="10" refx="8" refy="3" orient="auto" markerUnits="strokeWidth">
-                <path d="M0,0 L0,6 L9,3 z" fill="context-fill"
-                      stroke="context-stroke"/>
-            </marker>
-        </defs>
-
-        {{! number line layout }}
-        <g class="line-group" transform="translate({{middle}},{{c 'lineY'}})">
-            <line class="number-line" x1="{{c 'left'}}" x2="{{c 'right'}}"
-                  y1="0" y2="0"></line>
-            <text text-anchor="end" x="{{c 'left'}}" y="0">
-                0 of 100 &nbsp;</text>
-            <text text-anchor="start" x="{{c 'right'}}" y="0">
-                &nbsp; 100 of 100</text>
-
-            {{#unless field}}
-            {{! unless in feedback mode, don't show drag handle }}
-            <g class="handle draggable">
-                <circle class="draggable" cx="0" r="11"></circle>
-                <text class="me" text-anchor="middle" font-size="20"
-                      y="-20"></text>
-            </g>
-            {{/unless}}
-
-            {{! guess values drawn here }}
-        </g>
-        {{! result and payoff layout }}
-        <g class="node-group" transform="translate({{middle}},{{c 'nodeY'}})">
-            {{! text and lines are drawn here }}
-        </g>
-    </svg>
-
-    {{#unless guessSubmitted}}
-    {{#with guessValue}}
-        <div class="guess-confirm">
-        <h3>You guessed that there will be {{this}} heads in 100 flips.
-            <button class="btn btn-primary btn-lg confirm-guess">
-                Confirm</button>
-        </h3>
-        </div>
-    {{/with}}
-    {{/unless}}
+        {{> displayConversation}}
 </template>
 
 <!-- Template showing results of a game -->
 <template name="gameResults">
 
-    <div class="game-results">
-
-    {{! Show ground truth }}
-    <h3 class="text-center">
-        This coin came up heads
-        <b class="text-success">{{prob}}</b> times in 100 new flips.</h3>
-
-    {{! Show guess }}
-    <h3 class="text-center">
-        {{#if isCollInc}}
-            Your group guessed an average of
-            <b class="text-warning">{{ avgGuess }}</b> heads in 100 new flips.
-        {{else}}
-            You guessed <b class="text-info">{{ myAnswer }}</b> heads in 100 new flips.
-        {{/if}}
-    </h3>
-
-    {{! Explain payoff }}
-    <h3 class="text-center">
-      {{# if isCompInc}}
-        {{# if myWinStatus }}
-          {{! TODO better message for ties }}
-            Congratulations! You earned a bonus of <b>{{ myPayoff }}</b>. Your guess was one of the closest to the actual value.
-        {{else}}
-          Sorry!  You did not earn anything since your guess was not one of the closest. 
-        {{/if}}
-      {{else}}
-          {{#if isCollInc}}
-              You and every other player earned a bonus of 
-              <b>{{ myPayoff }}</b>.
-          {{else}}
-              You earned a bonus of <b>{{ myPayoff }}</b>.
-          {{/if}}
-      {{/if}}
-    </h3>
-
-    </div>
 
     <button id="returnToLobby" class="btn btn-lg btn-primary center-block">
         Return to lobby</button>
