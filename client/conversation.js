@@ -13,9 +13,10 @@ var text_example = { "_id" : "asdasdasdasdasdasd", "convo" : [ { "speaker" : "A"
 Template.displayConversation.onCreated(function(){
 
 	// Load the conversation.
+	text_example["convo"] = text_example["convo"].slice(0,40); // Take 40 examples only.
 	this.conversation = new ReactiveVar(text_example)
-	this.focused_uid = new ReactiveVar(20);
-	this.expandedLength = new ReactiveVar(20);
+	this.focused_uid = new ReactiveVar(0);
+	this.expandedLength = new ReactiveVar(40);
 	var _this = this;
 
 	Meteor.call('getMOCTaxonomy', function(err, data) {
@@ -32,35 +33,100 @@ Template.displayConversation.onCreated(function(){
 
 Template.displayConversation.events = {
 	'click #next_utterance': function(){
+		var full_mongo_conv =  Template.instance().conversation.get();
 		var focused_uid = Template.instance().focused_uid.get();
 		var expandedLength = Template.instance().expandedLength.get();
 
-		Template.instance().focused_uid.set(focused_uid + 1);
-		Template.instance().expandedLength.set(Math.max(focused_uid + 1, expandedLength));
+		var newid = Math.min(focused_uid + 1,  full_mongo_conv["convo"].length)
+		Template.instance().focused_uid.set(newid);
+		Template.instance().expandedLength.set(Math.max(newid, expandedLength));
+
 
 		$('html,body').animate({
-		  scrollTop: $('#focusedUtteranceText').offset().top
+		  scrollTop: $('.focusedUtteranceText').offset().top +100
 		}, 10);
 
 		$(window).scroll(function() {
 		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop() + "px");
 		});
-
-
-
 
 	},
 	'click #prev_utterance': function(){
 		var focused_uid = Template.instance().focused_uid.get();
-		Template.instance().focused_uid.set(focused_uid -1);
+		newid = Math.max(focused_uid -1, 0)
+		Template.instance().focused_uid.set(newid);
 
 		$('html,body').animate({
-		  scrollTop: $('#focusedUtteranceText').offset().top -10
+		  scrollTop: $('.focusedUtteranceText').offset().top +100
 		}, 10);
 
 		$(window).scroll(function() {
-		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop() + "px");
+		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
 		});
+	},
+	'click .utteranceText': function(e, t){
+		var newid = parseInt($(e.target)[0].id);
+		Template.instance().focused_uid.set(newid);
+
+		$('html,body').animate({
+		  scrollTop: $('.focusedUtteranceText').offset().top +100
+		}, 10);
+
+		$(window).scroll(function() {
+		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
+		});
+	},
+	'click .selectCategory':  function(e, t) {
+		var full_mongo_conv =  Template.instance().conversation.get();
+		var focused_uid = Template.instance().focused_uid.get();
+		var taxonomy = Session.get("MOCTaxonomy");
+		var conv = full_mongo_conv["convo"];
+
+		utterance = conv[focused_uid];
+		button_object = $(e.target)[0];
+		tax_choice = button_object["value"];
+
+		utterance["annotationData"].push(tax_choice);
+
+		//Check to see if label was sucessful!
+		annotationData = utterance['annotationData'];
+		categories = taxonomy;
+		for(i = 0; i < annotationData.length; i++){
+			categories = categories[annotationData[i]];
+		}
+
+		annotationComplete = typeof categories === "string" || categories instanceof String
+
+		if(annotationComplete)
+			utterance["mocLabel"] = utterance['annotationData']
+		else
+			utterance["mocLabel"] = null;
+
+		Template.instance().conversation.set(full_mongo_conv);
+	},
+	'click .unselectCategory':  function(e, t) {
+		var full_mongo_conv =  Template.instance().conversation.get();
+		var focused_uid = Template.instance().focused_uid.get();
+		var conv = full_mongo_conv["convo"];
+
+		utterance = conv[focused_uid];
+		button_object = $(e.target)[0];
+		tax_choice = button_object["text"];
+
+		if(tax_choice == "Root"){
+			utterance["annotationData"] = [];
+		}
+		else{
+			aData = utterance["annotationData"];
+			var cut_to = 0;
+			for(i = 0; i < aData.length; i++, cut_to++){
+				if(aData[i] ==  tax_choice)
+					break;
+			}
+			utterance["annotationData"] = aData.slice(0, cut_to+1);
+		}
+
+		Template.instance().conversation.set(full_mongo_conv);
 	}
 }
 
@@ -90,6 +156,7 @@ Template.displayConversation.helpers({
 				};
 			}
 			utterance.focused = i == focused_uid;
+			utterance.id = i;
 
 			curcontract["subexpressions"].push(utterance);
 		}
@@ -105,24 +172,21 @@ Template.displayConversation.helpers({
 		var conv = full_mongo_conv["convo"];
 		for(i = 0; i < conv.length; i++){
 			var utterance = conv[i];
-			if(!utterance.hasOwnProperty('moc'))
+			if(!utterance.hasOwnProperty('mocLabel'))
 				return false;
 		}
 		return true;
 	},
-
 	focusedUtterance: function(){
 		var full_mongo_conv =  Template.instance().conversation.get();
 		var focused_uid = Template.instance().focused_uid.get();
 		return full_mongo_conv["convo"][focused_uid];
 	},
-
 	mocTaxonomy: function(){
 		var taxonomy = Session.get("MOCTaxonomy");
 
 		var full_mongo_conv =  Template.instance().conversation.get();
 		var focused_uid = Template.instance().focused_uid.get();
-
 		var conv = full_mongo_conv["convo"];
 		utterance = conv[focused_uid];
 
@@ -133,11 +197,14 @@ Template.displayConversation.helpers({
 		annotationData = utterance['annotationData'];
 		categories = taxonomy;
 		for(i = 0; i < annotationData.length; i++){
-			categories = taxonomy[annotationData[i]];
+			categories = categories[annotationData[i]];
 		}
-		categories = Object.keys(categories);
 
-		console.log(utterance)
+		// Check if there do not exist subcategories.
+		if(typeof categories === "string" || categories instanceof String)
+			categories = [];
+		else
+			categories = Object.keys(categories);
 
 		// TODO: Build recursive structure on taxonomy component.
 		return {
@@ -146,48 +213,18 @@ Template.displayConversation.helpers({
 				annotationData.slice(0,annotationData.length-1)),
 			"curmoc": annotationData[annotationData.length-1]
 		}
+	},
+	getUtteranceStyle: function(utterance){
+		styles = "utteranceText ";
+
+		if(!!utterance.focused)
+			styles += " focusedUtteranceText";
+		if(!!utterance.mocLabel)
+			styles += " completedUtteranceText";
+		else if(!!utterance.annotationData && utterance.annotationData.length > 0)
+			styles += " incompleteUtteranceText";
+		return styles;
 	}
 
 });
 
-// Template.labelSentence.helpers({
-//   heads: function() {
-//     if (!Array.isArray(this)) return;
-//     return this.filter((h) => h).length;
-//   },
-//   total: function() {
-//     if (!Array.isArray(this)) return;
-//     return this.length;
-//   }
-// });
-
-
-// Template.gameResults.helpers({
-//   myAnswer: function() {
-//     const myGuess = Guesses.findOne({userId: Meteor.userId()});
-//     return myGuess && Math.round(myGuess.answer * 100);
-//   },
-//   myWinStatus: function() {
-//     const myGuess = Guesses.findOne({userId: Meteor.userId()});
-//     return myGuess && myGuess.payoff > 0;
-//   },
-//   myPayoff: function() {
-//     const myGuess = Guesses.findOne({userId: Meteor.userId()});
-//     return '$' + (myGuess && myGuess.payoff || 0.00).toFixed(2);
-//   },
-//   prob: function() {
-//     const g = Games.findOne();
-//     return g && Math.round(g.prob * 100);
-//   },
-//   avgGuess: function() {
-//     const g = Games.findOne();
-//     // It's OK to show a decimal here
-//     return g && f1(g.mean * 100);
-//   }
-// });
-
-// Template.gameResults.events({
-//   'click #returnToLobby': _.debounce(function() {
-//     Meteor.call('goToLobby');
-//   }, 1000, true)
-// });

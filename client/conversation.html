@@ -3,7 +3,9 @@
 
     <div class="col-md-8 flip-guesser">
         <h3>
-            <b>Full Conversation.</b>
+            <b>Full Conversation.</b> 			 {{#if taskComplete}}
+			 	<input type="button" class="btn btn-success" id="completeTask" value="Submit HIT!" />
+			 {{/if}}
         </h3>
 		<div class="form-group form-group-lg">
 		    <div class="form-control" id="conv-display">
@@ -17,18 +19,11 @@
 					    <tbody>
 					    {{#each utterance in conversationData}}
 					      <tr>
-					        <td>{{utterance.speaker}}</td>
+					        <td> <span class="badge badge-default">{{utterance.speaker}}</span></td>
 					        <td>
 					        	{{#each subexpression in utterance.subexpressions}}
-					        		
-									{{#if subexpression.focused}}
-										<span id="focusedUtteranceText"><b>{{subexpression.text}}</b></span>
-									{{else}}
-										{{subexpression.text}}
-									{{/if}}
-
-					        	{{/each}}	
-
+									<span class="{{getUtteranceStyle subexpression}}" id="{{subexpression.id}}">{{subexpression.text}}</span>
+					        	{{/each}}
 					        </td>
 					      </tr>
 					    {{/each}}
@@ -49,46 +44,55 @@
 	        </h4>
 	     </div>
 
+	     <!-- The navigation pane. -->
+
+  		<div class="form-group">
+		    <h4 for="navigation"><b>Navigation</b></h4>
+			 <input type="button" class="btn btn-primary" id="prev_utterance" value="Previous" />
+			 <input type="button" class="btn btn-primary" id="next_utterance" value="Next" />
+		 </div>
+
+		<!-- The utterance display box. -->
 
 		<div class="form-group form-group-lg">
-			<h4 for="focusedUtterance"><b>Utterance</b></h4><br/>
-			 <textarea id="focusedUtterance"  value="{{focusedUtterance.speaker}}: {{focusedUtterance.text}}" readonly></textarea>
+			<h4 for="focusedUtterance"><b>Utterance by </b><span class="badge badge-default">{{focusedUtterance.speaker}}</span></h4>
+			 <textarea id="focusedUtterance"  value="{{focusedUtterance.text}}" readonly></textarea>
 	    </div>
+
+	    <!-- The utterance menue. -->
 
   		<div class="form-group">
 		    <h4><b>Annotation</b></h4>
-		    <h4>Select one. For examples, hover over each button.</h4>
 		    {{#with mocTaxonomy}}
+		    	{{#if categories}}
+		    	<h4>Select one. For examples, hover over each button.</h4>
+		    	{{/if}}
+
 				<ol class="breadcrumb">
 				{{#each level in parents}}
-				  <li class="breadcrumb-item"><a href="#">{{level}}</a></li>
+				  <li class="breadcrumb-item"><a class="unselectCategory">{{level}}</a></li>
 				{{/each}}
+
 				  <li class="breadcrumb-item active">{{curmoc}}</li>
 				</ol>
+
+
+				{{#if categories}}
 				<div class="btn-group-wrap">
 				<div class="btn-group-vertical selectionList">
 		  		    {{#each category in categories}}
-		  		        <button id="{{category}}" type="button" class="btn btn-secondary selectCategory"  aria-haspopup="true" aria-expanded="false">
+		  		        <button value="{{category}}" type="button" class="btn btn-secondary selectCategory" aria-haspopup="true" aria-expanded="false">
 					      {{category}}
 					    </button>
 					 {{/each}}
 				</div>
 				</div>
+				{{else}}
 
-			    <ul>
-		
-				 </ul>
+		    	<h4> You've successfully categorized this utterance! To change your label click the blue links to change the category.</h4>
+				{{/if}}
 			 {{/with}}
 	    </div>
-
-  		<div class="form-group">
-		    <h4 for="navigation"><b>Navigation</b></h4><br/>
-			 <input type="button" class="btn btn-primary" id="prev_utterance" value="Previous" />
-			 <input type="button" class="btn btn-primary" id="next_utterance" value="Next" />
-			 {{#if taskComplete}}
-			 	<input type="button" class="btn btn-success" id="completeTask" value="Submit HIT!" />
-			 {{/if}}
-		 </div>
     </div>
 
 </template>

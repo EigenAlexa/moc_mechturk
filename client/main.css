@@ -19,7 +19,22 @@ input[type="range"] {
 	font-size: 20px;
 }
 
-#conversationTable{
+.utteranceText:hover {
+background-color: black;
+color: white;
+cursor: pointer;
+}
+
+.completedUtteranceText{
+	text-decoration: none;
+	background-color: lightgreen;
+}
+
+.incompleteUtteranceText{
+}
+
+.focusedUtteranceText{
+	font-weight: bold;
 }
 
 .btn-group-wrap {
@@ -32,3 +47,4 @@ div.btn-group-vertical {
     width: inherit;
     display: inline-block;
 }
+
