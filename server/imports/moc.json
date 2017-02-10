@@ -1,5 +1,4 @@
-
-var mocTaxonomy = {
+{
     "conversational_formality": {
         "closing": "Goodbye",
         "courtesies": [
@@ -72,6 +71,3 @@ var mocTaxonomy = {
         "sarcasm": "I totally want to be run over by a car"
     }
 }
-
-
-export { mocTaxonomy };
