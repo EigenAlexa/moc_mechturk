@@ -20,13 +20,11 @@ input[type="range"] {
 }
 
 .utteranceText:hover {
-background-color: black;
-color: white;
+border: solid black 1px;
 cursor: pointer;
 }
 
 .completedUtteranceText{
-	text-decoration: none;
 	background-color: lightgreen;
 }
 
@@ -48,3 +46,42 @@ div.btn-group-vertical {
     display: inline-block;
 }
 
+
+.tooljip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooljip .tooltiptext {
+    visibility: hidden;
+    width: auto;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooljip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.nextUtterance {
+    margin: 0 auto; 
+    padding-top: 20px;
+    text-align: center;
+}
+
+.submitHit{
+    margin: 0 auto; 
+    padding-top: 5px;
+    text-align: center;
+}
+
+#successBar {
+	text-align: center;
+}

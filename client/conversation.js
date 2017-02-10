@@ -31,6 +31,20 @@ Template.displayConversation.onCreated(function(){
 
 });
 
+function checkVisible(elm) {
+  var rect = elm.getBoundingClientRect();
+  var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+  return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+}
+
+function goToElem(elem){
+	if(!checkVisible($(elem)[0]))
+		$('html,body').animate({
+		  scrollTop: $(elem).offset().top +100
+		}, 10);
+}
+
+
 Template.displayConversation.events = {
 	'click #next_utterance': function(){
 		var full_mongo_conv =  Template.instance().conversation.get();
@@ -41,11 +55,8 @@ Template.displayConversation.events = {
 		Template.instance().focused_uid.set(newid);
 		Template.instance().expandedLength.set(Math.max(newid, expandedLength));
 
-
-		$('html,body').animate({
-		  scrollTop: $('.focusedUtteranceText').offset().top +100
-		}, 10);
-
+		goToElem('.focusedUtteranceText');
+		
 		$(window).scroll(function() {
 		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop() + "px");
 		});
@@ -56,9 +67,7 @@ Template.displayConversation.events = {
 		newid = Math.max(focused_uid -1, 0)
 		Template.instance().focused_uid.set(newid);
 
-		$('html,body').animate({
-		  scrollTop: $('.focusedUtteranceText').offset().top +100
-		}, 10);
+		goToElem('.focusedUtteranceText');
 
 		$(window).scroll(function() {
 		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
@@ -68,9 +77,7 @@ Template.displayConversation.events = {
 		var newid = parseInt($(e.target)[0].id);
 		Template.instance().focused_uid.set(newid);
 
-		$('html,body').animate({
-		  scrollTop: $('.focusedUtteranceText').offset().top +100
-		}, 10);
+		goToElem('.focusedUtteranceText');
 
 		$(window).scroll(function() {
 		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
@@ -125,6 +132,7 @@ Template.displayConversation.events = {
 			}
 			utterance["annotationData"] = aData.slice(0, cut_to+1);
 		}
+		utterance.mocLabel = null;
 
 		Template.instance().conversation.set(full_mongo_conv);
 	}
@@ -224,6 +232,28 @@ Template.displayConversation.helpers({
 		else if(!!utterance.annotationData && utterance.annotationData.length > 0)
 			styles += " incompleteUtteranceText";
 		return styles;
+	},	
+	getUtteranceTooltip: function(utterance){
+		if(!!utterance.mocLabel)
+			return  "" + utterance.mocLabel.join(' / ');
+		else if(!!utterance.annotationData && utterance.annotationData.length > 0)
+			return  "" + utterance.annotationData.join(' / ');	
+		else 
+			return null;
+	},
+	not: function(value){
+		return !value;
+	},
+	progressPercent: function(){
+		convo =  Template.instance().conversation.get()["convo"];
+		var len = convo.length;
+		var success = 0;
+		for(i = 0; i < convo.length; i++){
+			if(convo[i].hasOwnProperty("mocLabel") && !!convo[i].mocLabel)
+				success += 1.0;
+		}
+		console.log((success/len)*100);
+		return Math.round((success/len)*100);
 	}
 
 });
