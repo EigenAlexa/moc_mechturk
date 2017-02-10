@@ -54,8 +54,8 @@
 
   		<div class="form-group">
 		    <h4 for="navigation"><b>Navigation</b></h4>
-			 <input type="button" class="btn btn-primary" id="prev_utterance" value="Previous" />
-			 <input type="button" class="btn btn-primary" id="next_utterance" value="Next" />
+			 <input type="button" class="btn btn-primary" id="prev_utterance" value="Previous" disabled="{{not canNavigatePrev}}"/>
+			 <input type="button" class="btn btn-primary" id="next_utterance" value="Next" disabled="{{not canNavigateNext}}"/>
 		 </div>
 
 		<!-- The utterance display box. -->
@@ -74,7 +74,9 @@
 		    	<h4>Select one. For examples, hover over each button.</h4>
 		    	{{/if}}
 
-				<ol class="breadcrumb">
+				<ol class="breadcrumb"><button type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+				</button>
 				{{#each level in parents}}
 				  <li class="breadcrumb-item"><a class="unselectCategory">{{level}}</a></li>
 				{{/each}}
@@ -97,7 +99,7 @@
 
 		    	<h4> You've successfully categorized this utterance! To change your label click the blue links to change the category.</h4>
 		    	<div class="nextUtterance">
-		    		<button type="button" class="btn btn-success"  id="next_utterance" aria-haspopup="true" aria-expanded="false">
+		    		<button type="button" class="btn btn-success"  id="next_utterance" aria-haspopup="true" aria-expanded="false" disabled="{{not canNavigateNext}}">
 					      Next Utterance!
 					    </button>
 		    	</div>
