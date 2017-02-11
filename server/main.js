@@ -3,10 +3,11 @@ import { check } from 'meteor/check';
 
 import { mocTaxonomy } from '/server/imports/moc';
 import { Annotations } from '/common/models';
-// One-way mirror publication
 
+// One-way mirror publication
 var remoteDB = new MongoInternals.RemoteCollectionDriver(Meteor.settings.remoteConversationDBUri);
-MyCollection = new Mongo.Collection("collection_name", { _driver: remoteDB });
+Conversations = new Mongo.Collection("conversations", { _driver: remoteDB });
+
 
 
 Meteor.methods({
@@ -17,14 +18,19 @@ Meteor.methods({
     var exp = TurkServer.Instance.currentInstance();
     exp.teardown();
   },
-  updateAnnotation: function(id, annotation) {
-    Annotations.update(id, {$set:  {"convo": annotation}});
+  updateAnnotation: function(id, uid, update) {
+    var obj = {};
+    obj["convo." + String(uid)] = update;
+
+    Annotations.update(
+      {_id: id}, { $set: obj });
   }
 });
 
 
 Meteor.publish('annotations', function() {
-    return Annotations.find();
+    ano =  Annotations.find();
+    return ano;
 });
 
 TurkServer.initialize(function() {

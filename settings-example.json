@@ -23,5 +23,5 @@
       "frameHeight": 800
     }
   },
-  "remoteConversationDBUri": "mongodb://admin:iloveporn123@54.89.181.131:27017" 
+  "remoteConversationDBUri": "mongodb://54.89.181.131:27017/turkdata" 
 }

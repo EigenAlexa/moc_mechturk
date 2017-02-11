@@ -74,9 +74,10 @@
 		    	<h4>Select one. For examples, hover over each button.</h4>
 		    	{{/if}}
 
-				<ol class="breadcrumb"><button type="button" class="btn btn-default btn-sm">
-				<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-				</button>
+				<ol class="breadcrumb">
+					<button type="button" class="btn btn-default btn-sm" id="upCategory">
+					<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> 
+					</button>
 				{{#each level in parents}}
 				  <li class="breadcrumb-item"><a class="unselectCategory">{{level}}</a></li>
 				{{/each}}
@@ -102,6 +103,9 @@
 		    		<button type="button" class="btn btn-success"  id="next_utterance" aria-haspopup="true" aria-expanded="false" disabled="{{not canNavigateNext}}">
 					      Next Utterance!
 					    </button>
+	    			<button type="button" class="btn btn-info"  id="upCategory" aria-haspopup="true" aria-expanded="false">
+					      Change Label.
+				    </button>
 		    	</div>
 				{{/if}}
 			 {{/with}}

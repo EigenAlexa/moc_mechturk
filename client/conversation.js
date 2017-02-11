@@ -12,10 +12,11 @@ function getConversation(){
 		return conv_text["convo"];
 }
 
-function updateConversation(convo){
+
+function updateUtterance(uid, newUtterannce){
 	var conv_text = Annotations.findOne();
 	_id = conv_text._id
-	Meteor.call("updateAnnotation", _id, convo);
+	Meteor.call("updateAnnotation", _id, uid, newUtterannce);
 }
 
 
@@ -112,8 +113,8 @@ Template.displayConversation.events({
 			utterance["mocLabel"] = utterance['annotationData'];
 		else
 			utterance["mocLabel"] = null;
-		
-		updateConversation(conv);
+
+		updateUtterance(focused_uid, utterance);
 	},
 	'click .unselectCategory':  function(e, t) {
 		var focused_uid = Template.instance().focused_uid.get();
@@ -137,7 +138,20 @@ Template.displayConversation.events({
 		}
 		utterance.mocLabel = null;
 
-		updateConversation(conv);
+		updateUtterance(focused_uid, utterance);
+	},
+	'click #upCategory': function() {
+		var focused_uid = Template.instance().focused_uid.get();
+		var conv = getConversation();
+
+		aData = utterance["annotationData"];
+		utterance = conv[focused_uid];
+		cut_to = aData.length -1;
+		cut_to = Math.max(cut_to, 0);
+		utterance["annotationData"] = aData.slice(0, cut_to);
+		utterance.mocLabel = null;
+
+		updateUtterance(focused_uid, utterance);
 	},
 	'click #completeTask': _.debounce(function() {
     	Meteor.call('goToExitSurvey');
@@ -186,7 +200,7 @@ Template.displayConversation.helpers({
 		var conv = getConversation();
 		for(i = 0; i < conv.length; i++){
 			var utterance = conv[i];
-			if(!utterance.hasOwnProperty('mocLabel'))
+			if(!!utterance.mocLabel)
 				return false;
 		}
 		return true;
