@@ -22,8 +22,7 @@ var mocTaxonomy = {
     "declaration": {
         "opinionated": "I think vegetarian parents should give children the choice to be vegetarian or not.",
         "fact / certain declaration" : "The capital of Alabama is Montegomery.",
-        "uncertain declaration" : "I think Hemingway's cats might have had 6 toes on each paw.",
-        "Some of Hemingway's cats had 6 toes on each paw.",
+        "uncertain declaration": "I think Hemingway's cats might have had 6 toes on each paw.",
         "exclamation": "Wow.",
         "offer": "I can inform the president, if you want.",
         "future-commitment": "I'm gonna tell my wife about this chat.",
