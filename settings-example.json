@@ -17,8 +17,8 @@
     },
     "mturk": {
       "sandbox": true,
-      "accessKeyId": "",
-      "secretAccessKey": "",
+      "accessKeyId": "AKIAIJAPJCO7EOP3LUZA",
+      "secretAccessKey": "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",
       "externalUrl": "",
       "frameHeight": 800
     }
