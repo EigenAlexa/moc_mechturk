@@ -1,0 +1,18 @@
+<template name="createHIT">
+    <div class="page-header">
+        <h2>Create a Hit</h2>
+    </div>
+    
+    <form class="createHIT">
+        <p> How many HITs would you like to create? </p>
+        <input name="number"><br />
+        <select name="hittype" required>
+            <option value="" selected disabled></option>
+            {{#each hitTypes}}
+            <option value="{{HITTypeId}}">{{Title}} {{HITTypeId}}</option>
+            {{/each}}
+        </select>
+        <button type="submit">Create HITs</button>
+    </form>    
+</template>
+

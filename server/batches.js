@@ -10,7 +10,3 @@ Meteor.startup(function () {
   batch.setAssigner(new TurkServer.Assigners.SimpleAssigner);
 });
 
-// Set up an experiment given the treatment
-TurkServer.initialize(function() {
-
-});

@@ -23,6 +23,12 @@ Router.route('/experiment', {
 Router.route('/survey', function() {
   this.render('survey');
 });
+Router.route('/createHit', function() {
+  if (TurkServer.isAdmin()){
+    Meteor.subscribe('hitts');
+    this.render('createHIT');
+  } 
+});
 
 Tracker.autorun(function() {
   if (TurkServer.inLobby()) {
