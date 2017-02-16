@@ -81,6 +81,13 @@ Meteor.methods({
     Conversations.update({_id: doc._id}, doc);
     HITs.update({HITId: hitId}, hit);
     return true;
+  },
+  getCurrentHitId: (groupId) => {
+    inst = TurkServer.Instance.getInstance(groupId);
+    userId = inst.users()[0];
+    asst = TurkServer.Assignment.getCurrentUserAssignment(userId);
+    console.log(asst);
+    return asst.hitId;
   }
 });
 
@@ -95,11 +102,13 @@ Meteor.publish('annotations', function() {
 
 TurkServer.initialize(function() {
     //TODO GET FROM MONGO?
-    hitId = TurkServer.currentAssignment().hitId; 
+    console.log("initializing");
+    hitId = Meteor.call('getCurrentHitId', this.instance.groupId); 
     hit = HITs.findOne({HITId: hitId});
     // Process the mongo data.
     conv = hit.convo;
     docId = hit.docId;
+    console.log(conv);
     for(i = 0; i < conv.length; i++){
       conv[i]["annotationData"] = [];
       conv[i]["mocLabel"] = null;
