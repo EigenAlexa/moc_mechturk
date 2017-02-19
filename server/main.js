@@ -86,13 +86,11 @@ Meteor.methods({
     inst = TurkServer.Instance.getInstance(groupId);
     userId = inst.users()[0];
     asst = TurkServer.Assignment.getCurrentUserAssignment(userId);
-    console.log(asst);
     return asst.hitId;
   }
 });
 
 Meteor.publish('hitts', function hitTypePub(){
-        console.log(HITTypes.find().fetch());
         return HITTypes.find();
     });
 Meteor.publish('annotations', function() {
@@ -108,7 +106,6 @@ TurkServer.initialize(function() {
     // Process the mongo data.
     conv = hit.convo;
     docId = hit.docId;
-    console.log(conv);
     for(i = 0; i < conv.length; i++){
       conv[i]["annotationData"] = [];
       conv[i]["mocLabel"] = null;

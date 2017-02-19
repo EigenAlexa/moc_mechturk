@@ -198,9 +198,11 @@ Template.displayConversation.helpers({
 	},
 	taskComplete: function() {
 		var conv = getConversation();
+                console.log("task complete running");
 		for(i = 0; i < conv.length; i++){
 			var utterance = conv[i];
-			if(!!utterance.mocLabel)
+                        console.log(utterance.mocLabel);
+			if(!utterance.mocLabel)
 				return false;
 		}
 		return true;

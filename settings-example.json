@@ -12,7 +12,7 @@
     },
     "experiment": {
       "limit": {
-        "batch": 1
+        "batch": 1000
       }
     },
     "mturk": {
@@ -20,7 +20,7 @@
       "accessKeyId": "AKIAIJAPJCO7EOP3LUZA",
       "secretAccessKey": "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",
       "externalUrl": "https://mechturk.eigen.chat/",
-      "frameHeight": 800
+      "frameHeight": 1600
     }
   },
   "remoteConversationDBUri": "mongodb://turkuser:dickballs@54.144.1.73:27017/turkdata?authMechanism=SCRAM-SHA-1" 

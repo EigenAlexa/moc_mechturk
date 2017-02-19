@@ -16,7 +16,6 @@ import './hitcreator.html';
 
 Template.createHIT.helpers({
     hitTypes: function() {
-        console.log(HITTypes.find().fetch())
         return HITTypes.find();
     }
 });
