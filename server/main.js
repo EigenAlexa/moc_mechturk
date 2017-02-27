@@ -54,11 +54,15 @@ Meteor.methods({
         ]
     };
     doc = Conversations.findOne(query);
+    console.log(doc);
     hit = HITs.findOne({HITId: hitId});
     if(!doc.split){
         doc.split = [];
         len = doc.convo.length;
         num = Math.round(len / 50);
+        if (num == 0){
+          doc.split.push(0);
+        }
         for (i=0; i < num; i++){
             doc.split.push(i * Math.round(len / num));
         }
@@ -79,6 +83,7 @@ Meteor.methods({
     hit.convo = conv;
     hit.docId = doc._id;
     Conversations.update({_id: doc._id}, doc);
+    console.log(Conversations.findOne(query));
     HITs.update({HITId: hitId}, hit);
     return true;
   },

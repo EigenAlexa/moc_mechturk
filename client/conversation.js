@@ -154,9 +154,11 @@ Template.displayConversation.events({
 		updateUtterance(focused_uid, utterance);
 	},
 	'click #completeTask': _.debounce(function() {
-    	Meteor.call('goToExitSurvey');
+    		Meteor.call('goToExitSurvey');
+	}, 1000, true),
+	'click #returnHit': _.debounce(function() {
+		Meteor.call('returnHIT');
 	}, 1000, true)
-
 });
 
 Template.displayConversation.helpers({
