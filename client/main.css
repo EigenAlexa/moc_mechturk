@@ -50,11 +50,13 @@ div.btn-group-vertical {
 .tooljip {
     position: relative;
     display: inline-block;
+    width: auto;
+    margin: 0 auto;
 }
 
 .tooljip .tooltiptext {
     visibility: hidden;
-    width: auto;
+    width: 200px;
     background-color: black;
     color: #fff;
     text-align: center;

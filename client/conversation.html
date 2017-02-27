@@ -94,9 +94,11 @@
 									<div class="tooljip">
 										    <button value="{{category.label}}" type="button" class="btn btn-secondary selectCategory" aria-haspopup="true" aria-expanded="false">
 										    {{category.label}}
-										    </button>
-										<span class="tooltiptext">{{category.example}}</span>
-									</div>
+										    </button> 
+										{{#if category.example}}
+										<span class="tooltiptext">Example: {{category.example}}</span>
+										{{/if}}
+									</div> <br/>
 
 
 					 {{/each}}
