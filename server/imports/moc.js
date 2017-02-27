@@ -51,10 +51,8 @@ var mocTaxonomy = {
 
     },
     "identity": {
-        "identifying information": [
+        "identifying information": 
             "I am thirty years old",
-            "I was born in a factory"
-        ],
         "referene to past" : "I once backed my car into a trash can.",
     },
     "answer": {
