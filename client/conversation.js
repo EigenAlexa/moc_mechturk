@@ -30,7 +30,6 @@ Template.displayConversation.onCreated(function(){
 
 	Meteor.call('getMOCTaxonomy', function(err, data) {
 	  if(err) {
-	  	console.log(err);
 	    // Handle error
 	  }
 	  else {
@@ -205,7 +204,6 @@ Template.displayConversation.helpers({
 		var conv = getConversation();
 		for(i = 0; i < conv.length; i++){
 			var utterance = conv[i];
-                        console.log(utterance.mocLabel);
 			if(!utterance.mocLabel)
 				return false;
 		}
@@ -225,14 +223,11 @@ Template.displayConversation.helpers({
 		utterance = conv[focused_uid];
 
 		annotationData = utterance['annotationData'];
-		console.log(taxonomy);
 
 		categories = taxonomy;
 		for(i = 0; i < annotationData.length; i++){
 			categories = categories[annotationData[i]];
 		}
-
-		console.log(categories);
 
 		// Check if there do not exist subcategories.
 		if(typeof categories === "string" || categories instanceof String)

@@ -87,3 +87,7 @@ div.btn-group-vertical {
 #successBar {
 	text-align: center;
 }
+
+#buttonTips {
+    padding-bottom: 2px;
+}
