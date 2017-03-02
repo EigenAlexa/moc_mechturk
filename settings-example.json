@@ -5,8 +5,9 @@
       "autoLobby": false
     }
   },
+  "max_convo_length": 20,
   "turkserver": {
-    "adminPassword": "test",
+    "adminPassword": "ph!lk@hz",
     "hits": {
       "acceptUnknownHits": true
     },
@@ -16,7 +17,7 @@
       }
     },
     "mturk": {
-      "sandbox": false,
+      "sandbox": true,
       "accessKeyId": "AKIAIJAPJCO7EOP3LUZA",
       "secretAccessKey": "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",
       "externalUrl": "https://mechturk.eigen.chat/",

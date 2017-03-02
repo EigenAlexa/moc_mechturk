@@ -59,7 +59,7 @@ Meteor.methods({
     if(!doc.split){
         doc.split = [];
         len = doc.convo.length;
-        num = Math.round(len / 50);
+        num = Math.round(len / Meteor.settings.max_convo_length);
         if (num == 0){
           doc.split.push(0);
         }
