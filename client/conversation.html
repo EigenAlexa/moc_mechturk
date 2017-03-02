@@ -90,9 +90,17 @@
 				<div class="btn-group-wrap">
 				<div class="btn-group-vertical selectionList">
 		  		    {{#each category in categories}}
-		  		        <button value="{{category}}" type="button" class="btn btn-secondary selectCategory" aria-haspopup="true" aria-expanded="false">
-					      {{category}}
-					    </button>
+
+									<div class="tooljip" id="buttonTips">
+										    <button value="{{category.label}}" type="button" class="btn btn-success selectCategory" aria-haspopup="true" aria-expanded="false">
+										    {{category.label}}
+										    </button> 
+										{{#if category.example}}
+										<span class="tooltiptext">Example: {{category.example}}</span>
+										{{/if}}
+									</div> <br/>
+
+
 					 {{/each}}
 				</div>
 				</div>

@@ -3,6 +3,7 @@ import { Session } from 'meteor/session'
 import { Annotations } from '/common/models'
 
 
+
 function getConversation(){
 	/* Gets the convesattion mongo documentatiuon */
 	var conv_text = Annotations.findOne();
@@ -20,6 +21,8 @@ function updateUtterance(uid, newUtterannce){
 }
 
 
+
+
 Template.displayConversation.onCreated(function(){
 	this.focused_uid = new ReactiveVar(0);
 	this.expandedLength = new ReactiveVar(10);
@@ -27,7 +30,6 @@ Template.displayConversation.onCreated(function(){
 
 	Meteor.call('getMOCTaxonomy', function(err, data) {
 	  if(err) {
-	  	console.log(err);
 	    // Handle error
 	  }
 	  else {
@@ -200,10 +202,8 @@ Template.displayConversation.helpers({
 	},
 	taskComplete: function() {
 		var conv = getConversation();
-                console.log("task complete running");
 		for(i = 0; i < conv.length; i++){
 			var utterance = conv[i];
-                        console.log(utterance.mocLabel);
 			if(!utterance.mocLabel)
 				return false;
 		}
@@ -223,6 +223,7 @@ Template.displayConversation.helpers({
 		utterance = conv[focused_uid];
 
 		annotationData = utterance['annotationData'];
+
 		categories = taxonomy;
 		for(i = 0; i < annotationData.length; i++){
 			categories = categories[annotationData[i]];
@@ -231,9 +232,23 @@ Template.displayConversation.helpers({
 		// Check if there do not exist subcategories.
 		if(typeof categories === "string" || categories instanceof String)
 			categories = [];
-		else
-			categories = Object.keys(categories);
-
+		else{
+			_categories = [];
+			keys  = Object.keys(categories);
+			for( i = 0; i < keys.length; i++){
+				example_str =  categories[keys[i]];
+				
+				example_is_str = typeof example_str === "string" ||  example_str instanceof String;
+				if(!example_is_str){
+					example_str = "";
+				}
+				_categories.push({
+					'label': keys[i],  
+					'example': example_str
+				});
+			}
+			categories = _categories;
+		}
 		// TODO: Build recursive structure on taxonomy component.
 		return {
 			"categories": categories,

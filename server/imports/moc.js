@@ -6,13 +6,10 @@ var mocTaxonomy = {
         "Clarifying Question": "What do you mean you jumped over the grand canyon?",
         "Factoid Question": "What's the capital of Alabama?"
     },
-    "conversational_formality": {
+    "conversational formality": {
         "closing": "Goodbye",
-        "courtesies": [
-            "Thank you",
-            "You're welcome!"
-        ],
-        "opening": "Hi there!"
+        "courtesies": "Thank you; You're welcome!",
+       "opening": "Hi there!"
     },
     "empathy": {
         "sympathy": "I'm so sorry for your loss",
@@ -32,10 +29,12 @@ var mocTaxonomy = {
         "narrative content" : "While I was there, I found a spider the size of my hand",
     },
     "other": {
-        "filler word": "Um."
+        "filler word": "Um.",
+        "garbage string": "[@#$RSAR%TG56:00:00], asdasdasddas4ef",
+        "acronym": "lol; wtf; zomfg"
     },
     "influence": {
-        "Rhetorical-Question": "Can you blame your dog for wanting attention?",
+        "rhetorical question": "Can you blame your dog for wanting attention?",
         "steer conversation": "I'm gonna change the subject to Baseball",
         "suggestion": "Don't you think you should listen to what your kids say?",
         "command": "Stop telling your dog to jump through hoops!"
@@ -51,10 +50,8 @@ var mocTaxonomy = {
 
     },
     "identity": {
-        "identifying information": [
+        "identifying information": 
             "I am thirty years old",
-            "I was born in a factory"
-        ],
         "referene to past" : "I once backed my car into a trash can.",
     },
     "answer": {
@@ -62,7 +59,6 @@ var mocTaxonomy = {
         "opinion based answer": "I think we should give free coffee to tired people.",
         "i dont know answer": "I'm not really not sure",
         "maybe": "That may be the case, but I'm not sure",
-
         "full disagreement": "Nope",
         "partial disagreement": "I don't think you're right, but I'm not sure",
         "partial agreement": "I guess you're right, but I think it's possible they may have thought of this before",
