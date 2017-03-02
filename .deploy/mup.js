@@ -1,7 +1,7 @@
 module.exports = {
   servers: {
     main: {
-      "host": "52.205.201.135",
+      "host": "52.206.220.224",
       "username": "ubuntu",
       // or pem file (ssh based authentication)
       "pem": "~/.ssh/wguss.pem"
