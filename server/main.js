@@ -111,10 +111,11 @@ TurkServer.initialize(function() {
     // Process the mongo data.
     conv = hit.convo;
     docId = hit.docId;
+    workerId = Assignments.findOne({'hitId' : hitId})['workerId'];  
     for(i = 0; i < conv.length; i++){
       conv[i]["annotationData"] = [];
       conv[i]["mocLabel"] = null;
     }
-    Annotations.insert({"convo": conv, "docId": docId});
+    Annotations.insert({"convo": conv, "docId": docId, 'workerId': workerId});
 
 })
