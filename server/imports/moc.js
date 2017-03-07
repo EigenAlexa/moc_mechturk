@@ -1,6 +1,7 @@
 
 var mocTaxonomy = {
     "question": {
+        "rhetorical question": "Can you blame your dog for wanting attention?",
         "Context based question": "Did you ever find the dog you were looking for?",
         "Ask for Opinion": "What do you think about 80s music?",
         "Clarifying Question": "What do you mean you jumped over the grand canyon?",
@@ -52,7 +53,7 @@ var mocTaxonomy = {
     "identity": {
         "identifying information": 
             "I am thirty years old",
-        "referene to past" : "I once backed my car into a trash can.",
+        "reference to past" : "I once backed my car into a trash can.",
     },
     "answer": {
         "factoid based answer": "The capital of Alabama is Montegomery.",
@@ -74,7 +75,6 @@ var mocTaxonomy = {
     },
 
     "humor": {
-        "rhetorical question": "Can you blame your dog for wanting attention?",
         "wit/wordplay": "Time flies like an arrow; fruit flies like a banana.",
         "pun": "I'm reading a book about anti-gravity. It's impossible to put down.",
         "joke": "I dreamt I was forced to eat a giant marshmallow. When I woke up, my pillow was gone.",
