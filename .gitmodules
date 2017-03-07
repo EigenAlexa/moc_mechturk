@@ -1,3 +1,5 @@
 [submodule "packages/tutorials"]
 	path = packages/tutorials
-	url = https://github.com/mizzao/meteor-tutorials.git
+	url = https://github.com/philkuz/meteor-tutorials.git
+    branch = function-require
+
