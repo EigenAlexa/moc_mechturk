@@ -3,7 +3,7 @@ var emitter = new EventEmitter();
 
 var tutorialSteps = [
   {
-    template: Template.tut,
+    template: Template.tut
   },
 ];
 function getWidth(width) {
