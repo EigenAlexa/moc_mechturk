@@ -3,9 +3,9 @@
     "turkserver": {
       "dataRoute": "expAdmin",
       "autoLobby": false
-    }
+    }, 
+    "max_convo_length": 20
   },
-  "max_convo_length": 20,
   "turkserver": {
     "adminPassword": "ph!lk@hz",
     "hits": {

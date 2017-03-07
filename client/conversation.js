@@ -25,7 +25,8 @@ function updateUtterance(uid, newUtterannce){
 
 Template.displayConversation.onCreated(function(){
 	this.focused_uid = new ReactiveVar(0);
-	this.expandedLength = new ReactiveVar(10);
+  console.log(Meteor.settings.public.max_convo_length, 'maxconvo');
+	this.expandedLength = new ReactiveVar(Meteor.settings.public.max_convo_length);
 	var _this = this;
 
 	Meteor.call('getMOCTaxonomy', function(err, data) {
@@ -52,7 +53,6 @@ function goToElem(elem){
 		}, 10);
 }
 
-
 Template.displayConversation.events({
 	'click #next_utterance': function(){
 		var convo = getConversation();
@@ -63,11 +63,11 @@ Template.displayConversation.events({
 		Template.instance().focused_uid.set(newid);
 		Template.instance().expandedLength.set(Math.max(newid, expandedLength));
 
-		goToElem('.focusedUtteranceText');
+		// goToElem('.focusedUtteranceText');
 		
-		$(window).scroll(function() {
-		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop() + "px");
-		});
+		// $(window).scroll(function() {
+		//     $('#utteranceAnnotationTool').css('top', $(this).scrollTop() + "px");
+		// });
 
 	},
 	'click #prev_utterance': function(){
@@ -75,21 +75,21 @@ Template.displayConversation.events({
 		newid = Math.max(focused_uid -1, 0)
 		Template.instance().focused_uid.set(newid);
 
-		goToElem('.focusedUtteranceText');
+		// goToElem('.focusedUtteranceText');
 
-		$(window).scroll(function() {
-		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
-		});
+		// $(window).scroll(function() {
+		//     $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
+		// });
 	},
 	'click .utteranceText': function(e, t){
 		var newid = parseInt($(e.target)[0].id);
 		Template.instance().focused_uid.set(newid);
 
-		goToElem('.focusedUtteranceText');
+		// goToElem('.focusedUtteranceText');
 
-		$(window).scroll(function() {
-		    $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
-		});
+		// $(window).scroll(function() {
+		//     $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
+		// });
 	},
 	'click .selectCategory':  function(e, t) {
 		var conv = getConversation();
