@@ -98,6 +98,10 @@ Meteor.methods
 
     TurkServer.Batch.currentBatch().lobby.toggleStatus(userId)
     @unblock()
+  "getRandomHitId" : ->
+    hit = HITs.findOne()
+	# console.log hit
+	# return if !!hit then hit['hitId'] else -1
 
 
 # Clear lobby status on startup

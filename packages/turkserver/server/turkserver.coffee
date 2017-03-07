@@ -136,7 +136,6 @@ Meteor.publish "tsCurrentExperiment", (group) ->
     Experiments.find(group),
     RoundTimers.find() # Partitioned by group
   ]
-
 # For the preview page and test logins, need to publish the list of batches.
 # TODO make this a bit more secure
 Meteor.publish "tsLoginBatches", (batchId) ->

@@ -91,8 +91,9 @@ testLogin = ->
   return if Router.current()?.url?.indexOf("/turkserver") is 0
 
   str = Random.id()
+  hitId = '38VTL6WC4A7XT0TPGIM0UTDU9LI5YR'
   data =
-    hitId: str + "_HIT"
+    hitId: if !!hitId then hitId  else str + "_HIT"
     assignmentId: str + "_Asst"
     workerId: str + "_Worker"
 
@@ -121,7 +122,7 @@ loginParams = Session.get("_loginParams")
 
 if loginParams
 
-  Meteor._debug "Logging in with captured or stored parameters"
+  console.log "Logging in with captured or stored parameters"
   mturkLogin(loginParams)
 else
   # Give enough time to log in some other way before showing login dialog
