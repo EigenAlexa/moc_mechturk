@@ -4,11 +4,9 @@ var emitter = new EventEmitter();
 var tutorialSteps = [
   {
     template: Template.tut,
-    onLoad: function() { console.log("The tutorial has started!"); },
   },
 ];
 function getWidth(width) {
-  console.log('widthy width', width);
   if (!width) {
     return Math.min($(window).width(), 530);
   } else {

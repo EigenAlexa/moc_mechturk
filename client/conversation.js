@@ -25,7 +25,6 @@ function updateUtterance(uid, newUtterannce){
 
 Template.displayConversation.onCreated(function(){
 	this.focused_uid = new ReactiveVar(0);
-  console.log(Meteor.settings.public.max_convo_length, 'maxconvo');
 	this.expandedLength = new ReactiveVar(Meteor.settings.public.max_convo_length);
 	var _this = this;
 
