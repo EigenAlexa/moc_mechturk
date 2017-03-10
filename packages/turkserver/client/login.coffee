@@ -91,7 +91,7 @@ testLogin = ->
   return if Router.current()?.url?.indexOf("/turkserver") is 0
 
   str = Random.id()
-  hitId = '38VTL6WC4A7XT0TPGIM0UTDU9LI5YR'
+  hitId = Meteor.settings.public.hitId;
   data =
     hitId: if !!hitId then hitId  else str + "_HIT"
     assignmentId: str + "_Asst"
