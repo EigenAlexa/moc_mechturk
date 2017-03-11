@@ -3,7 +3,7 @@
 
     <div class="col-md-8 flip-guesser">
         <h3>
-            <b>Full Conversation.</b> 
+            <b>CONVERSATION</b> 
         </h3>
 		<div class="form-group form-group-lg">
 		    <div class="form-control" id="conv-display">
@@ -38,19 +38,36 @@
 
 		    </div>
 	    </div>
+	    	    <!-- Submit the hit. -->
+  		<div class="form-group">
+
+		   <h4 for="navigation"><b>Progress</b> 
+	 	 	</h4>
+	 	 	<h4>To complete the HIT, label all of the utterences on the page! You'll see your progress here.</h4>
+		  <div class="progress">
+			  <div class="progress-bar" role="progressbar"  id="successBar" aria-valuenow="{{progressPercent}}"
+			  aria-valuemin="0" aria-valuemax="100" style="width:{{progressPercent}}%">
+			    	{{progressPercent}}%
+			  </div>
+			</div>
+			<div class="submitHit">
+	 	 	<button class="btn btn-primary" type="button" id="completeTask"  disabled="{{not taskComplete}}">Submit HIT!</button>
+			</div>
+
+		</div>
+
+
 		{{#if tutorialEnabled}}
 			{{> tutorial options}}
-		{{/if}}
+		{{/if}} 
+		
 
     </div>
 
 
     <div class="col-md-4 coin-flips" id="utteranceAnnotationTool">
         <div class="public-flips">
-	        <h3><b>Mode of conversation label:</b></h3>
-	        <h4>
-	        Categorize the mode of conversation for the highlighted sentence.
-	        </h4>
+	        <h3><b>LABEL TOOL</b></h3>
 	     </div>
 
 	     <!-- The navigation pane. -->
@@ -122,23 +139,6 @@
 			 {{/with}}
 	    </div>
 
-	    <!-- Submit the hit. -->
-  		<div class="form-group">
-
-		   <h4 for="navigation"><b>Progress</b> 
-	 	 	</h4>
-	 	 	<h4>To complete the HIT, label all of the utterences on the page! You'll see your progress here.</h4>
-		  <div class="progress">
-			  <div class="progress-bar" role="progressbar"  id="successBar" aria-valuenow="{{progressPercent}}"
-			  aria-valuemin="0" aria-valuemax="100" style="width:{{progressPercent}}%">
-			    	{{progressPercent}}%
-			  </div>
-			</div>
-			<div class="submitHit">
-	 	 	<button class="btn btn-primary" type="button" id="completeTask"  disabled="{{not taskComplete}}">Submit HIT!</button>
-			</div>
-
-		</div>
 
     </div>
 

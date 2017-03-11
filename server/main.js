@@ -72,6 +72,7 @@ Meteor.methods({
     startInd = doc.split[doc.currentSplit];
     endInd = doc.split[doc.currentSplit + 1];
     conv = doc.convo.slice(startInd, endInd);
+    console.log(conv.length)
     doc.currentSplit = doc.currentSplit + 1;
     if (doc.currentSplit == doc.split.length - 1){
         doc.assigned = true;
