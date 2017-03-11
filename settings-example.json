@@ -4,8 +4,8 @@
       "dataRoute": "expAdmin",
       "autoLobby": false
     },
-    "max_convo_length": 10
-    "hitId" : "3WUVMVA7OBXU4WFB70KAATMFIFJZAU"
+    "max_convo_length": 10,
+    "hitId" : "3VLL1PIENQIJ609CHJPSBO6K7Y6OZ5"
   },
   "turkserver": {
     "adminPassword": "ph!lk@hz",

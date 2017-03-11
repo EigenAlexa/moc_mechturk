@@ -39,6 +39,10 @@ Template.displayConversation.onCreated(function(){
 
 });
 
+Template.displayConversation.onRendered(function() {
+$.stickysidebarscroll("##utteranceAnnotationTool",{offset: {top: 10, bottom: 200}})
+});
+
 function checkVisible(elm) {
   var rect = elm.getBoundingClientRect();
   var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
@@ -63,10 +67,7 @@ Template.displayConversation.events({
 		Template.instance().expandedLength.set(Math.max(newid, expandedLength));
 
 		// goToElem('.focusedUtteranceText');
-		
-		// $(window).scroll(function() {
-		//     $('#utteranceAnnotationTool').css('top', $(this).scrollTop() + "px");
-		// });
+
 
 	},
 	'click #prev_utterance': function(){
@@ -76,9 +77,6 @@ Template.displayConversation.events({
 
 		// goToElem('.focusedUtteranceText');
 
-		// $(window).scroll(function() {
-		//     $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
-		// });
 	},
 	'click .utteranceText': function(e, t){
 		var newid = parseInt($(e.target)[0].id);
@@ -86,9 +84,6 @@ Template.displayConversation.events({
 
 		// goToElem('.focusedUtteranceText');
 
-		// $(window).scroll(function() {
-		//     $('#utteranceAnnotationTool').css('top', $(this).scrollTop()+ "px");
-		// });
 	},
 	'click .selectCategory':  function(e, t) {
 		var conv = getConversation();
