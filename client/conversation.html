@@ -3,7 +3,11 @@
 
     <div class="col-sm-8 flip-guesser">
         <h3>
-            <b>CONVERSATION</b> 
+            <b>CONVERSATION 
+            {{#if mirror}}
+            	FOR {{groupId}}
+            {{/if}}
+            </b> 
         </h3>
 		<div class="form-group form-group-lg">
 		    <div class="form-control" id="conv-display">
@@ -57,9 +61,11 @@
 		</div>
 
 
-		{{#if tutorialEnabled}}
-			{{> tutorial options}}
-		{{/if}} 
+		{{#unless mirror}}
+			{{#if tutorialEnabled}}
+				{{> tutorial options}}
+			{{/if}} 
+		{{/unless}}
 		
 
     </div>
@@ -104,8 +110,6 @@
 
 				  <li class="breadcrumb-item active">{{curmoc}}</li>
 				</ol>
-
-
 				{{#if categories}}
 				<div class="btn-group-wrap">
 				<div class="btn-group-vertical selectionList">

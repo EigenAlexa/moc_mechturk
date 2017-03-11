@@ -18,6 +18,10 @@ Router.route('/experiment', {
     console.log(group);
     return Meteor.subscribe('annotations', group);
   },
+  data: function() {
+   return { groupId: "", 
+                     mirror: false};
+  },
   template: 'experiment'
 });
 
@@ -25,26 +29,29 @@ Router.route('/survey', function() {
   this.render('survey');
 });
 
+
+Router.map(function () {
+    this.route('viewHIT', {
+        path: 'exp/:groupId',
+        waitOn: function () {
+            return Meteor.subscribe("oneWayMirror", this.params.groupId);
+        },
+        data: function () {
+            return { groupId: this.params.groupId, 
+                     mirror: true}
+        },
+        template: 'experiment',
+    });
+});
+
+
+
 Router.route('/createHit', function() {
   if (TurkServer.isAdmin()){
     Meteor.subscribe('hitts');
     this.render('createHIT');
   } 
 });
-
-Router.route('/viewHIT/:_groupID', {
-  waitOn:  function () {
-    var params = this.params; // { _id: "5" }
-    var id = params._groupID; // "5"
-       if (TurkServer.isAdmin()){
-        console.log(id);
-        return Meteor.subscribe('annotations');
-      }
-    },
-  template: 'viewHIT'
-});
-
-
 
 Tracker.autorun(function() {
   if (TurkServer.inLobby()) {

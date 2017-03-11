@@ -1,7 +1,7 @@
 {
   "public": {
     "turkserver": {
-      "dataRoute": "expAdmin",
+      "dataRoute": "viewHIT",
       "autoLobby": false
     },
     "max_convo_length": 10,

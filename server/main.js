@@ -97,12 +97,17 @@ Meteor.methods({
 });
 
 Meteor.publish('hitts', function hitTypePub(){
-    // SECURITY VULNERABILITY :O
         return HITTypes.find();
     });
 
 Meteor.publish('annotations', function() {
     ano =  Annotations.find();
+    return ano;
+});
+
+
+Meteor.publish("oneWayMirror", function (worldId) {
+    ano =   Annotations.direct.find({ _groupId: worldId });
     return ano;
 });
 
