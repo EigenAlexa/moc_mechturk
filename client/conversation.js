@@ -39,10 +39,6 @@ Template.displayConversation.onCreated(function(){
 
 });
 
-Template.displayConversation.onRendered(function() {
-$.stickysidebarscroll("##utteranceAnnotationTool",{offset: {top: 10, bottom: 200}})
-});
-
 function checkVisible(elm) {
   var rect = elm.getBoundingClientRect();
   var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);

@@ -91,3 +91,7 @@ div.btn-group-vertical {
 #buttonTips {
     padding-bottom: 2px;
 }
+
+.speaker-label {
+    max-width: 120px;
+}

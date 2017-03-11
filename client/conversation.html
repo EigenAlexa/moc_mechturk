@@ -1,7 +1,7 @@
 
 <template name="displayConversation">
 
-    <div class="col-md-8 flip-guesser">
+    <div class="col-sm-8 flip-guesser">
         <h3>
             <b>CONVERSATION</b> 
         </h3>
@@ -17,7 +17,7 @@
 					    <tbody>
 					    {{#each utterance in conversationData}}
 					      <tr>
-					        <td> <span class="badge badge-default">{{utterance.speaker}}</span></td>
+					        <td> <span class="badge badge-default speaker-label">{{utterance.speaker}}</span></td>
 					        <td>
 					        	{{#each subexpression in utterance.subexpressions}}
 								
@@ -65,7 +65,7 @@
     </div>
 
 
-    <div class="col-md-4 coin-flips" id="utteranceAnnotationTool">
+    <div class="col-sm-4 coin-flips" id="utteranceAnnotationTool">
         <div class="public-flips">
 	        <h3><b>LABEL TOOL</b></h3>
 	     </div>
@@ -81,7 +81,7 @@
 		<!-- The utterance display box. -->
 
 		<div class="form-group form-group-lg">
-			<h4 for="focusedUtterance"><b>Utterance by </b><span class="badge badge-default">{{focusedUtterance.speaker}}</span></h4>
+			<h4 for="focusedUtterance"><b>Utterance by </b><span class="badge badge-default speaker-label">{{focusedUtterance.speaker}}</span></h4>
 			 <textarea id="focusedUtterance"  value="{{focusedUtterance.text}}" readonly></textarea>
 	    </div>
 

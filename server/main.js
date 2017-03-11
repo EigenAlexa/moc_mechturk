@@ -97,8 +97,10 @@ Meteor.methods({
 });
 
 Meteor.publish('hitts', function hitTypePub(){
+    // SECURITY VULNERABILITY :O
         return HITTypes.find();
     });
+
 Meteor.publish('annotations', function() {
     ano =  Annotations.find();
     return ano;
